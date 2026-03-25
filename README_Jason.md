@@ -16,9 +16,10 @@
 - String interpolation {request.Name} with SQL injection risk. 
 - Possible NULL reference will cause query to fail
 
-
-
-
+### CreatePerson.cs
+- Requirement calls for add/update by name, but only create is supported
+- BadHttpRequestException("Bad Request"); should be more descriptive 'Person already exists' and not generic
+- No validation for Name is NULL or empty
 
 ### Person Controller
 - Requirement calls for add/update by name, but only create is supported
@@ -26,16 +27,8 @@
 - Repeated try/catch blocks in each action (could be centralized to middleware)
 - Logging not implemented per task requirements
 
-
-### CreatePerson.cs
-- Requirement calls for add/update by name, but only create is supported
-- BadHttpRequestException("Bad Request"); should be more descriptive 'Person already exists' and not generic
-- No validation for Name is NULL or empty
-
 ### ControllerBaseExtensions.cs
 - Uses a custom response model for StatusCodes, which is consistent but differs from standard asp.net reusults
-
-
 
 ### CreateAstronautDutyPreProcessor
 - Possible SQL injection attack on CreateAstronautDutyResult queries 
@@ -54,34 +47,35 @@
 
 ### GetAstronautDutiesByName & GetPersonByName
 - Parameterized SQL queries to remove injection risk - done
-- Added null check before using person.PersonId - done
+- Added not-found handling for missing person - done
 
-
-
-
-
-
-###  ControllerBaseExtensions.cs
-- Consider using built-in ASP.NET result types and keeping BaseResponse focused on data and messaging. 
-- For consistancy CreateAstronautDuty is missing exception handling 
+### CreatePerson.cs
+- Requirement calls for add/update by name, but only create is supported - todo: create Update 
+- BadHttpRequestException("Bad Request"); should be more descriptive 'Person already exists' and not generic - done
+- For consistancy CreateAstronautDuty is missing exception handling in pre processor 
+- No validation for Name is NULL or empty - todo
 
 # Person Controller
-- Introduce centralized exception handling via middleware or MediatR pipeline behaviors
+- Introduce centralized exception handling via middleware or MediatR pipeline behaviors  - toconsider
 - Implement structured logging persisted to the database
 - Add unit tests for key business logic
 - Improve request validation and error handling
 
 
 
+### Data.Person.cs
+- Index  Person.Name for query optimization
+
+
+
+###  ControllerBaseExtensions.cs
+- Consider using built-in ASP.NET result types and keeping BaseResponse focused on data and messaging. 
 
 
 ### CreateAstronautDutyPreProcessor
 - Update queries to include paramaterized queries
 - Update verifyNoPreviousDuty to include unique indentifier after lookup
 - Update BadHttpRequestExceptions to be more descriptive
-
-### Data.Person.cs
-- Index  Person.Name for query optimization
-
+- Miss-match with career end date being one day before retired duty start date. If RETIRED CareerEndDate not following rule. - done
 
 ## Future Improvements

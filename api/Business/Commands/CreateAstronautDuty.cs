@@ -32,11 +32,11 @@ namespace StargateAPI.Business.Commands
         {
             var person = _context.People.AsNoTracking().FirstOrDefault(z => z.Name == request.Name);
 
-            if (person is null) throw new BadHttpRequestException("Bad Request");
+            if (person is null) throw new BadHttpRequestException("Name is required");
 
             var verifyNoPreviousDuty = _context.AstronautDuties.FirstOrDefault(z => z.DutyTitle == request.DutyTitle && z.DutyStartDate == request.DutyStartDate);
 
-            if (verifyNoPreviousDuty is not null) throw new BadHttpRequestException("Bad Request");
+            if (verifyNoPreviousDuty is not null) throw new BadHttpRequestException("Person already exists");
 
             return Task.CompletedTask;
         }
@@ -68,9 +68,9 @@ namespace StargateAPI.Business.Commands
                 astronautDetail.CurrentDutyTitle = request.DutyTitle;
                 astronautDetail.CurrentRank = request.Rank;
                 astronautDetail.CareerStartDate = request.DutyStartDate.Date;
-                if (request.DutyTitle == "RETIRED") //if (string.Equals(request.DutyTitle?.Trim(), "RETIRED", StringComparison.OrdinalIgnoreCase))
+                if (request.DutyTitle == "RETIRED")
                 {
-                    astronautDetail.CareerEndDate = request.DutyStartDate.Date;
+                    astronautDetail.CareerEndDate = request.DutyStartDate.AddDays(-1).Date;
                 }
 
                 await _context.AstronautDetails.AddAsync(astronautDetail);
@@ -88,11 +88,6 @@ namespace StargateAPI.Business.Commands
             }
 
             query = $"SELECT * FROM [AstronautDuty] WHERE {person.Id} = PersonId Order By DutyStartDate Desc";
-
-            //Because the business rule says only one current duty exists.
-            // ? SELECT * FROM AstronautDuty
-            //WHERE PersonId = @PersonId AND DutyEndDate IS NULL
-            //ORDER BY DutyStartDate DESC
 
             var astronautDuty = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDuty>(query);
 
