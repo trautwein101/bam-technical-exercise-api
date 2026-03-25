@@ -12,9 +12,11 @@
 ### AstronautDutyController
 - GetAstronautDutiesByName currently sends GetPersonByName instead of GetAstronautDutiesByName. Previous query does not return astronaut duty history.
 
-### GetAstronautDutiesByName
+### GetAstronautDutiesByName & GetPersonByName
 - String interpolation {request.Name} with SQL injection risk. 
 - Possible NULL reference will cause query to fail
+
+
 
 
 
@@ -35,8 +37,6 @@
 
 
 
-
-
 ### CreateAstronautDutyPreProcessor
 - Possible SQL injection attack on CreateAstronautDutyResult queries 
 - verifyNoPreviousDuty preprocessor should have duplicate validation check with person as two astronauts might have the same title/date
@@ -52,9 +52,12 @@
 - Updated GET action to send GetAstronautDutiesByName instead of GetPersonByName -done
 - Added try/catch to CreateAstronautDuty for consistent exception handling -done
 
-### GetAstronautDutiesByName
+### GetAstronautDutiesByName & GetPersonByName
 - Parameterized SQL queries to remove injection risk - done
 - Added null check before using person.PersonId - done
+
+
+
 
 
 
