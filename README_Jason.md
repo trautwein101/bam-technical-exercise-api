@@ -9,6 +9,15 @@
 
 ## Observations
 
+### AstronautDutyController
+- GetAstronautDutiesByName currently sends GetPersonByName instead of GetAstronautDutiesByName. Previous query does not return astronaut duty history.
+
+### GetAstronautDutiesByName
+- String interpolation {request.Name} with SQL injection risk. 
+- Possible NULL reference will cause query to fail
+
+
+
 ### Person Controller
 - Requirement calls for add/update by name, but only create is supported
 - CreatePerson uses a raw string instead of a request model (limits validation)
@@ -24,12 +33,9 @@
 ### ControllerBaseExtensions.cs
 - Uses a custom response model for StatusCodes, which is consistent but differs from standard asp.net reusults
 
-### AstronautDutyController
-- GetAstronautDutiesByName currently sends GetPersonByName instead of GetAstronautDutiesByName. Previous query does not return astronaut duty history.
 
-### GetAstronautDutiesByName
-- String interpolation {request.Name} with SQL injection risk. 
-- Possible NULL reference will cause query to fail
+
+
 
 ### CreateAstronautDutyPreProcessor
 - Possible SQL injection attack on CreateAstronautDutyResult queries 
@@ -44,7 +50,12 @@
 
 ### AstronautDutyController
 - Updated GET action to send GetAstronautDutiesByName instead of GetPersonByName -done
-- Added try/catch to CreateAstronautDuty for consistent exception handling
+- Added try/catch to CreateAstronautDuty for consistent exception handling -done
+
+### GetAstronautDutiesByName
+- Parameterized SQL queries to remove injection risk - done
+- Added null check before using person.PersonId - done
+
 
 
 ###  ControllerBaseExtensions.cs
@@ -59,9 +70,7 @@
 
 
 
-### GetAstronautDutiesByName
-- update query string to be parameterized 
-- update GetAstronautDutiesByNameHandler to have a null check before using {person.PersonId}
+
 
 ### CreateAstronautDutyPreProcessor
 - Update queries to include paramaterized queries
