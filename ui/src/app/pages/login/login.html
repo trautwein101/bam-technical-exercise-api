@@ -1,0 +1,42 @@
+<div class="login-card">
+    <div class="login-header">
+        <h2>ACTS Access Portal</h2>
+        <p>Sign in to view astronaut career records</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="form-field">
+            <label for="email">Email</label>
+            <input id="email" type="email" formControlName="email" placeholder="admin@acts.com" />
+            <small *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.['required']">
+            Email is required
+            </small>
+
+            <small *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.['email']">
+            Enter a valid email address
+            </small>
+        </div>
+
+        <div class="form-field">
+            <label for="password">Password</label>
+            <input id="password" type="password" formControlName="password" placeholder="acts-password" />
+            <small *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.['required']">
+            Password is required
+            </small>
+        </div>
+
+        <small class="hint">
+            Demo login: admin@acts.com / acts-password
+        </small>
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <button type="submit" [disabled]="isLoading">
+            {{ isLoading ? 'Signing In ...' : 'Sign In' }}
+        </button>
+
+    </form>
+
+</div>

@@ -1,0 +1,11 @@
+<header class="app-header">
+  <div class="header-content">
+    <div class="brand">
+      <h1>Astronaut Career Tracking System</h1>
+    </div>
+
+    <button *ngIf="isLoggedIn" type="button" class="logout-button" (click)="logout()">
+      Logout
+    </button>
+  </div>
+</header>

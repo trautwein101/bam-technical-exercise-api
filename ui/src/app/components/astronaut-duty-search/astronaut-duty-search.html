@@ -1,0 +1,92 @@
+<div class="search-shell">
+    <div class="search-card">
+        <div class="search-header">
+            <h2>Astronaut Duty Lookup</h2>
+            <p>Search for astronaut to view duty history and career progression</p>
+        </div>
+
+        <div class="search-form">
+            <input
+                type="text"
+                [(ngModel)]="searchName"
+                (keyup.enter)="onEnterKey()"
+                placeholder="Enter astronaut name"
+            />
+
+        <button (click)="search()" [disabled]="isLoading || !searchName.trim()">
+            {{ isLoading ? 'Searching...' : 'Search' }}
+        </button>       
+
+        <button type="button" class="secondary" (click)="reset()" [disabled]="isLoading && !hasSearched">
+          Reset
+        </button>    
+    </div>
+
+    <div *ngIf="isLoading" class="status-panel loading">
+        Retrieving astronaut duty history...
+    </div>
+
+    <div *ngIf="errorMessage" class="status-panel error">
+        {{ errorMessage }}
+    </div>
+
+    <div *ngIf="hasSearched && !isLoading && !errorMessage && person" class="person-summary">
+        <div class="summary-grid">
+            <div class="summary-card">
+                <span class="summary-label">Astronaut</span>
+                <strong>{{ person.name }}</strong>
+            </div>
+            <div class="summary-card">
+                <span class="summary-label">Current Rank</span>
+                <strong>{{ person.currentRank || 'N/A' }}</strong>
+            </div>  
+            <div class="summary-card">
+                <span class="summary-label">Current Duty</span>
+                <strong>{{ person.currentDutyTitle || 'N/A' }}</strong>
+            </div>  
+            <div class="summary-card">
+                <span class="summary-label">Career Dates</span>
+                <strong>{{ formatDate(person.careerStartDate) }} - 
+                    {{ person.careerEndDate ? formatDate(person.careerEndDate) : 'Active' }}
+                </strong>
+            </div>  
+        </div>
+    </div>
+
+    <div *ngIf="hasSearched && !isLoading && !errorMessage && person && duties.length === 0" class="status-panel empty">
+    This person has no astronaut duty history yet.
+    </div>
+
+    <div *ngIf="duties.length > 0" class="results-section">
+        <div class="results-header">
+            <h3>Duty History</h3>
+            <span>{{ duties.length }} record(s)</span>
+        </div>
+    </div>
+
+    <div class="timeline">
+        <div class="timeline-item" *ngFor="let duty of duties">
+            <div class="timeline-marker"></div>
+
+            <div class="timeline-card">
+                <div class="timeline-card-header">
+                    <div>
+                        <h4> {{ duty.dutyTitle }}</h4>
+                        <p> {{ duty.rank }}</p>
+                    </div>
+
+                    <span class="status-badge" [class.current]="!duty.dutyEndDate">
+                        {{ duty.dutyEndDate ? 'Completed' : 'Current'}}
+                    </span>
+
+                    <div class="timeline-dates">
+                        <strong>Start:</strong> {{ formatDate(duty.dutyStartDate) }}
+                        <span class="date-seperator">•</span>
+                        <strong>End:</strong> {{ formatDate(duty.dutyEndDate) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
