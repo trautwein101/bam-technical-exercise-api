@@ -34,9 +34,9 @@ namespace StargateAPI.Business.Commands
 
             if (person is null) throw new BadHttpRequestException("Name is required");
 
-            var verifyNoPreviousDuty = _context.AstronautDuties.FirstOrDefault(z => z.DutyTitle == request.DutyTitle && z.DutyStartDate == request.DutyStartDate);
+            var verifyNoPreviousDuty = _context.AstronautDuties.FirstOrDefault(z => z.PersonId == person.Id && z.DutyTitle == request.DutyTitle && z.DutyStartDate == request.DutyStartDate);
 
-            if (verifyNoPreviousDuty is not null) throw new BadHttpRequestException("Person already exists");
+            if (verifyNoPreviousDuty is not null) throw new BadHttpRequestException("Astronaut already exists for this person ad start date");
 
             return Task.CompletedTask;
         }

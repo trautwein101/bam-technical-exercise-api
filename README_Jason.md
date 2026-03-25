@@ -14,7 +14,7 @@
 
 ### GetAstronautDutiesByName & GetPersonByName
 - String interpolation {request.Name} with SQL injection risk. 
-- Possible NULL reference will cause query to fail
+- Identified potential null reference risks in query handling
 
 ### CreatePerson.cs
 - Requirement calls for add/update by name, but only create is supported
@@ -28,13 +28,12 @@
 - Logging not implemented per task requirements
 
 ### ControllerBaseExtensions.cs
-- Uses a custom response model for StatusCodes, which is consistent but differs from standard asp.net reusults
+- Uses a custom response model for StatusCodes, which is consistent but differs from standard asp.net results
 
 ### CreateAstronautDutyPreProcessor
 - Possible SQL injection attack on CreateAstronautDutyResult queries 
-- verifyNoPreviousDuty preprocessor should have duplicate validation check with person as two astronauts might have the same title/date
 - BadHttpRequestEx- ceptions are generic and should be more descriptive for debugging purposes
-- Miss-match with career end date being one day before retired duty start date. If RETIRED CareerEndDate not following rule.
+- Mismatch  with career end date being one day before retired duty start date. If RETIRED CareerEndDate not following rule.
 
 
 
@@ -56,11 +55,12 @@
 ### Person Controller
 - Improve request validation and error handling - done
 - CreatePerson uses a raw string instead of a request model (limits validation) - done
-- Added Update Person (PUT) and create new MediatR for seperation of concerns -done
+- Added Update Person (PUT) and create new MediatR for separation of concerns -done
 
 ### CreateAstronautDutyPreProcessor
 - Update BadHttpRequestExceptions to be more descriptive - done
 - Miss-match with career end date being one day before retired duty start date. If RETIRED CareerEndDate not following rule. - done
+- Updated verifyNoPreviousDuty preprocessor to validate duplicates per person (multiple astronauts can share the same duty title and date) - done
 
 ### Data.Person.cs
 - Index  Person.Name for query optimization  - done
@@ -72,7 +72,7 @@
 - Logged exceptions in PersonController for failed requests  - done
 
 ### Unit Testing
-- Add unit tests for key business logic
+- Added basic unit tests for CreatePerson to cover key validations and successful scenarios - done
 
 
 
@@ -85,5 +85,4 @@
 - No validation for Name is NULL or empty - todo
 
 ### CreateAstronautDutyPreProcessor
-- Update queries to include paramaterized queries to prevent SQL injection attack - todo
-- Update verifyNoPreviousDuty to include unique indentifier after lookup - todo
+- Update queries to include parameterized queries to prevent SQL injection attack - todo
