@@ -51,7 +51,7 @@ namespace StargateAPI.Business.Commands
 
                 await _context.People.AddAsync(newPerson);
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
 
                 return new CreatePersonResult()
                 {

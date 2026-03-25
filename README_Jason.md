@@ -50,32 +50,34 @@
 - Added not-found handling for missing person - done
 
 ### CreatePerson.cs
-- Requirement calls for add/update by name, but only create is supported - todo: create Update 
+- Requirement calls for add/update by name, but only create is supported - done
 - BadHttpRequestException("Bad Request"); should be more descriptive 'Person already exists' and not generic - done
-- For consistancy CreateAstronautDuty is missing exception handling in pre processor 
-- No validation for Name is NULL or empty - todo
 
 # Person Controller
-- Introduce centralized exception handling via middleware or MediatR pipeline behaviors  - toconsider
 - Implement structured logging persisted to the database
 - Add unit tests for key business logic
-- Improve request validation and error handling
-
-
-
-### Data.Person.cs
-- Index  Person.Name for query optimization
-
-
-
-###  ControllerBaseExtensions.cs
-- Consider using built-in ASP.NET result types and keeping BaseResponse focused on data and messaging. 
-
+- Improve request validation and error handling - done
+- CreatePerson uses a raw string instead of a request model (limits validation) - done
+- Added Update Person (PUT) and create new MediatR for seperation of concerns -done
 
 ### CreateAstronautDutyPreProcessor
-- Update queries to include paramaterized queries
-- Update verifyNoPreviousDuty to include unique indentifier after lookup
-- Update BadHttpRequestExceptions to be more descriptive
+- Update BadHttpRequestExceptions to be more descriptive - done
 - Miss-match with career end date being one day before retired duty start date. If RETIRED CareerEndDate not following rule. - done
 
+
+
 ## Future Improvements
+
+# Person Controller
+- Introduce centralized exception handling via middleware or MediatR pipeline behaviors  - to consider
+
+
+### CreatePerson.cs
+- No validation for Name is NULL or empty - todo
+
+### CreateAstronautDutyPreProcessor
+- Update queries to include paramaterized queries to prevent SQL injection attack - todo
+- Update verifyNoPreviousDuty to include unique indentifier after lookup - todo
+
+### Data.Person.cs
+- Index  Person.Name for query optimization  - todo
