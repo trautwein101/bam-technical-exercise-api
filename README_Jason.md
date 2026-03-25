@@ -42,6 +42,11 @@
 
 ## Improvements
 
+### AstronautDutyController
+- Updated GET action to send GetAstronautDutiesByName instead of GetPersonByName -done
+- Added try/catch to CreateAstronautDuty for consistent exception handling
+
+
 ###  ControllerBaseExtensions.cs
 - Consider using built-in ASP.NET result types and keeping BaseResponse focused on data and messaging. 
 - For consistancy CreateAstronautDuty is missing exception handling 
@@ -52,9 +57,7 @@
 - Add unit tests for key business logic
 - Improve request validation and error handling
 
-### AstronautDutyController
-- Update naming for MediatR class to match Requirements GetAstronautDutyByName instead of GetPersonByName
-- Add Try/Catch to CreateAstronautDuty for exception handling  
+
 
 ### GetAstronautDutiesByName
 - update query string to be parameterized 
