@@ -19,7 +19,7 @@ namespace StargateAPI.Business.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(StargateContext).Assembly);
 
-            //SeedData(modelBuilder);
+            SeedData(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -49,7 +49,7 @@ namespace StargateAPI.Business.Data
                         PersonId = 1,
                         CurrentRank = "1LT",
                         CurrentDutyTitle = "Commander",
-                        CareerStartDate = DateTime.Now
+                        CareerStartDate = new DateTime(2020, 1, 1)
                     }
                 );
 
@@ -59,7 +59,7 @@ namespace StargateAPI.Business.Data
                     {
                         Id = 1,
                         PersonId = 1,
-                        DutyStartDate = DateTime.Now,
+                        DutyStartDate = new DateTime(2020, 1, 1),
                         DutyTitle = "Commander",
                         Rank = "1LT"
                     }
