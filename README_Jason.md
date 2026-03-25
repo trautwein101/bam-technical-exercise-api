@@ -53,7 +53,7 @@
 - Requirement calls for add/update by name, but only create is supported - done
 - BadHttpRequestException("Bad Request"); should be more descriptive 'Person already exists' and not generic - done
 
-# Person Controller
+### Person Controller
 - Implement structured logging persisted to the database
 - Add unit tests for key business logic
 - Improve request validation and error handling - done
@@ -65,12 +65,10 @@
 - Miss-match with career end date being one day before retired duty start date. If RETIRED CareerEndDate not following rule. - done
 
 
-
 ## Future Improvements
 
-# Person Controller
+### Person Controller
 - Introduce centralized exception handling via middleware or MediatR pipeline behaviors  - to consider
-
 
 ### CreatePerson.cs
 - No validation for Name is NULL or empty - todo
