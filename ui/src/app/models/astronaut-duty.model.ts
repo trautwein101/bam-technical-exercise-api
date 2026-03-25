@@ -23,3 +23,17 @@ export interface AstronautDutyResponse {
   person: PersonAstronaut | null;
   astronautDuties: AstronautDuty[];
 }
+
+export interface CreateAstronautDutyRequest {
+  name: string;
+  rank: string;
+  dutyTitle: string;
+  dutyStartDate: string;
+}
+
+export interface CreateAstronautDutyResponse {
+  success: boolean;
+  message: string;
+  responseCode: number;
+  id?: number | null;
+}

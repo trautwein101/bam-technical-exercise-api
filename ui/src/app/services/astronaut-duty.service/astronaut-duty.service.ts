@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AstronautDutyResponse } from '../../models/astronaut-duty.model';
+import { AstronautDutyResponse, CreateAstronautDutyRequest, CreateAstronautDutyResponse } from '../../models/astronaut-duty.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +16,9 @@ export class AstronautDutyService {
       `${this.baseUrl}/AstronautDuty/${encodeURIComponent(name)}`
     );
   }
+
+  createAstronautDuty(request: CreateAstronautDutyRequest): Observable<CreateAstronautDutyResponse> {
+    return this.http.post<CreateAstronautDutyResponse>(`${this.baseUrl}/AstronautDuty/`, request);
+  }
+
 }

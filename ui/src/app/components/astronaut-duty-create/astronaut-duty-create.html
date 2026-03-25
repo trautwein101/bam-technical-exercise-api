@@ -1,0 +1,63 @@
+<div class="create-shell">
+  <div class="create-card">
+    <div class="create-header">
+      <h2>Create Astronaut Duty</h2>
+      <p>Add a new astronaut duty assignment for an existing person</p>
+    </div>
+
+        <form [formGroup]="createForm" (ngSubmit)="submit()" class="create-form">
+        <div class="form-grid">
+            <div class="form-field">
+            <label for="name">Person Name</label>
+            <input id="name" type="text" formControlName="name" placeholder="Enter person name" />
+            <small *ngIf="createForm.controls.name.touched && createForm.controls.name.errors?.['required']">
+                Name is required
+            </small>
+            </div>
+
+            <div class="form-field">
+            <label for="rank">Rank</label>
+            <input id="rank" type="text" formControlName="rank" placeholder="Enter rank" />
+            <small *ngIf="createForm.controls.rank.touched && createForm.controls.rank.errors?.['required']">
+                Rank is required
+            </small>
+            </div>     
+
+            <div class="form-field">
+            <label for="dutyTitle">Duty Title</label>
+            <input id="dutyTitle" type="text" formControlName="dutyTitle" placeholder="Enter duty title" />
+            <small *ngIf="createForm.controls.dutyTitle.touched && createForm.controls.dutyTitle.errors?.['required']">
+                Duty title is required
+            </small>
+            </div>
+
+            <div class="form-field">
+            <label for="dutyStartDate">Duty Start Date</label>
+            <input id="dutyStartDate" type="date" formControlName="dutyStartDate" />
+            <small *ngIf="createForm.controls.dutyStartDate.touched && createForm.controls.dutyStartDate.errors?.['required']">
+                Duty start date is required
+            </small>
+            </div>
+        </div>
+
+        <div *ngIf="successMessage" class="status-panel success">
+            {{ successMessage }}
+        </div>
+
+        <div *ngIf="errorMessage" class="status-panel error">
+            {{ errorMessage }}
+        </div>  
+
+        <div class="button-row">
+            <button type="submit" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Creating...' : 'Create Duty' }}
+            </button>
+
+            <button type="button" class="secondary" (click)="reset()" [disabled]="isSubmitting">
+            Reset
+            </button>
+        </div>
+
+    </form>
+  </div>
+</div>
