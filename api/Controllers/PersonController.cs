@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StargateAPI.Business.Commands;
 using StargateAPI.Business.Queries;
+using StargateAPI.Business.IServices;
 using System.Net;
 
 namespace StargateAPI.Controllers
@@ -12,9 +13,12 @@ namespace StargateAPI.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public PersonController(IMediator mediator)
+        private readonly IProcessLogService _processLogService;
+
+        public PersonController(IMediator mediator, IProcessLogService processLogService)
         {
             _mediator = mediator;
+            _processLogService = processLogService;
         }
 
         [HttpGet("")]
@@ -73,6 +77,9 @@ namespace StargateAPI.Controllers
             }
             catch (Exception ex)
             {
+
+                await _processLogService.LogAsync("CreatePerson", "Error", ex.Message);
+
                 return this.GetResponse(new BaseResponse()
                 {
                     Message = ex.Message,

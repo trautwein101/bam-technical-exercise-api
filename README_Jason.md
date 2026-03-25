@@ -54,8 +54,6 @@
 - BadHttpRequestException("Bad Request"); should be more descriptive 'Person already exists' and not generic - done
 
 ### Person Controller
-- Implement structured logging persisted to the database
-- Add unit tests for key business logic
 - Improve request validation and error handling - done
 - CreatePerson uses a raw string instead of a request model (limits validation) - done
 - Added Update Person (PUT) and create new MediatR for seperation of concerns -done
@@ -63,6 +61,19 @@
 ### CreateAstronautDutyPreProcessor
 - Update BadHttpRequestExceptions to be more descriptive - done
 - Miss-match with career end date being one day before retired duty start date. If RETIRED CareerEndDate not following rule. - done
+
+### Data.Person.cs
+- Index  Person.Name for query optimization  - done
+
+### Process Logging
+- Implemented database-backed logging via ProcessLog entity and table  - done
+- Added IProcessLogService abstraction for centralized logging of business events  - done
+- Logged successful operations in CreatePersonHandler  - done
+- Logged exceptions in PersonController for failed requests  - done
+
+### Unit Testing
+- Add unit tests for key business logic
+
 
 
 ## Future Improvements
@@ -76,6 +87,3 @@
 ### CreateAstronautDutyPreProcessor
 - Update queries to include paramaterized queries to prevent SQL injection attack - todo
 - Update verifyNoPreviousDuty to include unique indentifier after lookup - todo
-
-### Data.Person.cs
-- Index  Person.Name for query optimization  - todo

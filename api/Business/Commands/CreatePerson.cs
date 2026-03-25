@@ -3,9 +3,11 @@ using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
 using StargateAPI.Business.Data;
 using StargateAPI.Controllers;
+using StargateAPI.Business.IServices;
 
 namespace StargateAPI.Business.Commands
 {
+
     public class CreatePerson : IRequest<CreatePersonResult>
     {
         public required string Name { get; set; } = string.Empty;
@@ -14,6 +16,7 @@ namespace StargateAPI.Business.Commands
     public class CreatePersonPreProcessor : IRequestPreProcessor<CreatePerson>
     {
         private readonly StargateContext _context;
+
         public CreatePersonPreProcessor(StargateContext context)
         {
             _context = context;
@@ -36,10 +39,12 @@ namespace StargateAPI.Business.Commands
     public class CreatePersonHandler : IRequestHandler<CreatePerson, CreatePersonResult>
     {
         private readonly StargateContext _context;
+        private readonly IProcessLogService _processLogService;
 
-        public CreatePersonHandler(StargateContext context)
+        public CreatePersonHandler(StargateContext context, IProcessLogService processLogService)
         {
             _context = context;
+            _processLogService = processLogService;
         }
         public async Task<CreatePersonResult> Handle(CreatePerson request, CancellationToken cancellationToken)
         {
@@ -52,6 +57,8 @@ namespace StargateAPI.Business.Commands
                 await _context.People.AddAsync(newPerson);
 
                 await _context.SaveChangesAsync(cancellationToken);
+
+                await _processLogService.LogAsync("CreatePerson", "Success", $"Created person '{newPerson.Name}'", cancellationToken);
 
                 return new CreatePersonResult()
                 {
