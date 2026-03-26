@@ -10,8 +10,8 @@
 ## Improvements - API
 
 ### AstronautDutyController
-- Updated GET action to send GetAstronautDutiesByName instead of GetPersonByName -done
-- Added try/catch to CreateAstronautDuty for consistent exception handling -done
+- Updated GET action to send GetAstronautDutiesByName instead of GetPersonByName - done
+- Added try/catch to CreateAstronautDuty for consistent exception handling - done
 
 ### GetAstronautDutiesByName & GetPersonByName
 - Parameterized SQL queries to remove injection risk - done
@@ -24,7 +24,7 @@
 ### Person Controller
 - Improve request validation and error handling - done
 - CreatePerson uses a raw string instead of a request model (limits validation) - done
-- Added Update Person (PUT) and create new MediatR for separation of concerns -done
+- Added Update Person (PUT) and create new MediatR for separation of concerns - done
 
 ### CreateAstronautDutyPreProcessor
 - Update BadHttpRequestExceptions to be more descriptive - done
@@ -44,7 +44,7 @@
 - Added basic unit tests for CreatePerson to cover key validations and successful scenarios - done
 
 
-## Future Improvements
+## Future Improvements - API
 
 ### Person Controller
 - Introduce centralized exception handling via middleware or MediatR pipeline behaviors  - to consider
@@ -58,5 +58,79 @@
 
 ## Development - UI
 
+- Created a Home landing page with a simple login experience to simulate user entry into the system - done
+
+- Built an Admin Dashboard to serve as the primary working area for the application - done
+
+- Implemented Astronaut Duty Lookup functionality: - done
+  - Allows users to search for an astronaut by name
+  - Displays duty history and career progression
+  - Integrates with backend API using Angular services 
+
+- Implemented Create Astronaut Duty feature: - done
+  - Form-based input for Person Name, Rank, Duty Title, and Start Date
+  - Connected to backend API to persist new duty records
+  - Basic validation and reset functionality included
+
+- Structured the UI using Angular component-based architecture:  - done
+  - Separation of concerns between components, services, and templates
+  - Reusable service layer for API communication
+
+- Focused on clean layout and usability:  - done
+  - Clear sectioning (Lookup vs Create) for a simple, readable UI with responsive form inputs
+
+## Future Improvements - UI
 
 
+1. Add proper authentication and authorization
+   - Replace the simple login experience with secure token-based authentication
+   - Introduce role-based access (e.g., admin vs standard user)
+
+2. Add environment-based configuration
+   - Move API base URLs into Angular environment files for local, development, and production builds
+   - Prepare the application for environment-specific deployment
+
+3. Expand routing as the application grows
+   - Current routing supports Home and Admin Dashboard
+   - Additional routes would support feature separation, route guards, and interceptor-based request handling
+
+
+## UI Screenshots
+
+### Admin Login
+![Admin Login](x_document_images/ui_login.png)
+
+### Admin Dashboard - Search Error
+![Admin Dashboard - Search Error](x_document_images/ui_dashboard_error.png)
+
+### Admin Dashboard - Full View
+![Admin Dashboard - Full View](x_document_images/ui_dashboard.png)
+
+*Admin Dashboard showing astronaut lookup and create duty functionality*
+
+
+## Requst Flow Diagram
+![Request Flow](x_document_images/request_flow.png)
+
+*The Angular UI follows a component → service → API pattern with clear separation of concerns.*
+
+## Request Flow 
+
+User  
+→ Home Component (Login)  
+→ Router Navigation (/admin)  
+→ Admin Dashboard Component  
+→ Astronaut Duty Components (Lookup / Create)  
+→ AstronautDutyService  
+→ HttpClient (Angular / RxJS)  
+→ ASP.NET Core API (AstronautDutyController → MediatR → Handler)  
+→ Database  
+
+Response  
+← Database  
+← Handler  
+← Controller  
+← HttpClient  
+← Service  
+← Component  
+← UI Updated
